@@ -1,3 +1,4 @@
+#this is nfs client file
 ---
 - hosts: test
   tasks:
