@@ -1,0 +1,25 @@
+---
+- hosts: test
+  tasks:
+  - name: disabling selinux
+    shell: "setenforce 0"
+  - name: stopping iptables
+    service:
+      name: iptables
+      state: stopped
+      enabled: false
+  - name: install rpms
+    yum:
+      name: nfs-utils
+      state: present
+  - name: install rpcbind
+    yum:
+      name: rpcbind
+      state: present
+  - name: mounting nfs share persistently
+    mount:
+      path: /share
+      src: 192.168.1.2:/share
+      fstype: nfs
+      state: mounted
+
