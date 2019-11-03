@@ -1,0 +1,30 @@
+---
+- hosts: test
+  tasks:
+    - name: disabling of selinux
+      shell: "setenforce 0"
+    - name: stoping and enabling iptables
+      service:
+        name: iptables
+        state: stopped
+        enabled: no
+    - name: installing nfs_utils
+      yum:
+        name: nfs-utils
+        state: present
+    - name: starting the nfs services
+      service:
+        name: nfs
+        state: started
+        enabled: yes
+    - name: creating the nfs share directory
+      file:
+        path: /share
+        state: directory
+    - name: creating share
+      lineinfile:
+        path: /etc/exports
+        line: '/share *(rw,no_root_squash)'
+    - name: exporting shares
+
+
